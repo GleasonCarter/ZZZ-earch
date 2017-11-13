@@ -2,14 +2,16 @@ import sys
 import os
 from tkinter import *
 
+stop_words = ["the", "and", "of", "a", "but", "this", "that"] ## temporary test set of words
+
 #all starts from the user input
 def userInput():
 	mtext = ment.get()
 	mlabel2 = Label(mGui, text = mtext).pack()
 	manipulateText(mtext)
-	return 
+	return
 
-#need to do stuff with text 
+#need to do stuff with text
 def manipulateText(stext):
 	word_arr = stext.split()
 	print(stext)
@@ -17,7 +19,7 @@ def manipulateText(stext):
 	for word in word_arr:
 		print(word)
 
-	#give the results of running the 
+	#give the results of running the
 	#file = ranking(arr or text file whatever we are giving them)
 	results(stext,"file.txt")
 	return
@@ -67,4 +69,3 @@ mEntry = Entry(mGui,textvariable=ment).pack()
 #mbutton = Button(mGui,text='Quit',command=quit).pack(side=LEFT, anchor=S, padx=[200,10])
 
 mGui.mainloop()
-

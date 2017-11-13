@@ -1,4 +1,5 @@
 import sys
+import os
 from tkinter import *
 
 #all starts from the user input
@@ -10,20 +11,38 @@ def userInput():
 
 #need to do stuff with text 
 def manipulateText(stext):
+	word_arr = stext.split()
 	print(stext)
-	results()
+	print ("This is new:")
+	for word in word_arr:
+		print(word)
+
+	#give the results of running the 
+	#file = ranking(arr or text file whatever we are giving them)
+	results(stext,"file.txt")
 	return
 
 #need to print results somehow
-def results():
-	Label(mGui,text="RESULTS").pack()
-	with open("file.txt", "r") as ins:
+def results(stext,file1):
+	mGui2 = Tk()
+	mGui2.geometry('450x450+200+100')
+	mGui2.title('Results')
+	Button(mGui2,text="Restart",command = restart).pack()
+	Label(mGui2,text=stext).pack()
+	with open(file1, "r") as ins:
 		array = []
 		for line in ins:
 			array.append(line)
-			Label(mGui,text=line).pack()
+			Label(mGui2,text=line).pack()
 	return
 
+def restart():
+	python = sys.executable
+	os.execl(python,python,*sys.argv)
+	return
+
+def quit(root):
+	root.quit()
 
 
 #set up the frame
@@ -38,6 +57,7 @@ mGui.title('My Search Bar')
 
 #search Button
 mbutton = Button(mGui,text ="Search",command = userInput, fg='red',bg = 'blue').pack()
+
 
 #text box to enter search into
 mEntry = Entry(mGui,textvariable=ment).pack()

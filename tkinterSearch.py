@@ -1,6 +1,7 @@
 import sys
 import os
 from tkinter import *
+import webbrowser
 
 #all starts from the user input
 def userInput():
@@ -33,8 +34,18 @@ def results(stext,file1):
 		array = []
 		for line in ins:
 			array.append(line)
+			#makeLink(mGui2, line, r"http://www.google.com")
 			Label(mGui2,text=line).pack()
 	return
+
+def callback(url):
+    webbrowser.open(url)
+
+#makes link labeled 'text' that directs to 'url' and packs it
+def makeLink(root, txt, url):
+        link = Label(root, text=txt, fg="blue", cursor="hand2", font="Arial 10 underline")
+        link.pack()
+        link.bind("<Button-1>", lambda x: callback(url))
 
 def restart():
 	python = sys.executable

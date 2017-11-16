@@ -42,12 +42,6 @@ def results(stext,file1):
 	canvas.grid(row=0, column=0, sticky=N+S+E+W)
 	yscrollbar.config(command=canvas.yview)
 	frame.pack()
-	# Currently creates a text widget w/in popup results box...
-	#scrollbar = Scrollbar(mGui2)
-	#scrollbar.pack(side=RIGHT, fill=Y)
-	#text = Text(mGui2, wrap=WORD, yscrollcommand=scrollbar.set)
-	#text.pack()
-	#scrollbar.config(command=text.yview)
 	# Currently creates for a listbox on popup text/results box
 	#listbox = Listbox(mGui2, yscrollcommand=scrollbar.set)
 	#for i in range(100):

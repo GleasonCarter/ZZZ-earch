@@ -1,8 +1,10 @@
 import sys
 import os
-from tkinter import *
+import textManipulation
+from Tkinter import *
 
-stop_words = ["the", "and", "of", "a", "but", "this", "that"] ## temporary test set of words
+stp_wrds = ["the", "and", "of", "a", "but", "this", "that"] ## temporary test set of words
+test = "the shore, a place to be"
 
 #all starts from the user input
 def userInput():

@@ -1,0 +1,15 @@
+import textManipulation as tM
+
+if __name__ == '__main__':
+    print "Tests for punctuation strip:"
+    str1 = "No change"
+    str2 = "Remove ;Leading"
+    str3 = "Remove& Trailing"
+    str4 = ".Remove Both,"
+    str5 = "(.Remove$) Multiple!"
+    str6 = "!!!$#@><><>:}{{[[]-()(())]}"
+    strings_to_test = [str1, str2, str3, str4, str5, str6]
+
+    for string in strings_to_test:
+        tM.stripPunctuation(string)
+        print string

@@ -2,8 +2,11 @@ import string
 
 ## Strips leading and trailing punctuation from a word(buggy)
 def stripPunctuation(a_word):
-	for punct in string.punctuation:
-		a_word.strip(punct)
+	## loop untill all external punctuation has been removed
+	while ((len(a_word) > 0) and ((a_word[0] in string.punctuation) or (a_word[len(a_word)-1] in string.punctuation))):
+		for punct in string.punctuation:
+			a_word = a_word.strip(punct)
+	return a_word
 
 ## Loops over all words(whitespace deliminated) and returns a list of keywords
 def extractKeywords(stext, stop_words):

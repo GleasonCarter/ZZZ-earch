@@ -30,14 +30,31 @@ def results(stext,file1):
 	mGui2.title('Results')
 	Button(mGui2,text="Restart",command = restart).pack()
 	Label(mGui2,text=stext).pack()
+
 	# Create scrollbar for right side of popup text box
-	scrollbar = Scrollbar(mGui)
-	scrollbar.pack(side=RIGHT, fill=Y)
-	listbox = Listbox(mGui, yscrollcommand=scrollbar.set)
-	for i in range(1000):
-		listbox.insert(END, str(i))
-	listbox.pack(side=LEFT, fill=BOTH)
-	scrollbar.config(command=listbox.yview)
+	# Issues: Packs in above listed out "results" ADDRESS THIS
+	frame = Frame(mGui2, bd=2, relief=SUNKEN)
+	frame.grid_rowconfigure(0, weight=1)
+	frame.grid_columnconfigure(0, weight=1)
+	yscrollbar = Scrollbar(frame)
+	yscrollbar.grid(row=0, column=1, sticky=N+S)
+	canvas = Canvas(frame, bd=0, yscrollcommand=yscrollbar.set)
+	canvas.grid(row=0, column=0, sticky=N+S+E+W)
+	yscrollbar.config(command=canvas.yview)
+	frame.pack()
+	# Currently creates a text widget w/in popup results box...
+	#scrollbar = Scrollbar(mGui2)
+	#scrollbar.pack(side=RIGHT, fill=Y)
+	#text = Text(mGui2, wrap=WORD, yscrollcommand=scrollbar.set)
+	#text.pack()
+	#scrollbar.config(command=text.yview)
+	# Currently creates for a listbox on popup text/results box
+	#listbox = Listbox(mGui2, yscrollcommand=scrollbar.set)
+	#for i in range(100):
+	#	listbox.insert(END, str(i))
+	#listbox.pack(side=LEFT, fill=BOTH)
+	#scrollbar.config(command=listbox.yview)
+
 	with open(file1, "r") as ins:
 		array = []
 		for line in ins:

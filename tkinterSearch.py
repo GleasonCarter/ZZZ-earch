@@ -30,6 +30,14 @@ def results(stext,file1):
 	mGui2.title('Results')
 	Button(mGui2,text="Restart",command = restart).pack()
 	Label(mGui2,text=stext).pack()
+	# Create scrollbar for right side of popup text box
+	scrollbar = Scrollbar(mGui)
+	scrollbar.pack(side=RIGHT, fill=Y)
+	listbox = Listbox(mGui, yscrollcommand=scrollbar.set)
+	for i in range(1000):
+		listbox.insert(END, str(i))
+	listbox.pack(side=LEFT, fill=BOTH)
+	scrollbar.config(command=listbox.yview)
 	with open(file1, "r") as ins:
 		array = []
 		for line in ins:
@@ -69,13 +77,9 @@ mGui.title('My Search Bar')
 #search Button
 mbutton = Button(mGui,text ="Search",command = userInput, fg='red',bg = 'blue').pack()
 
-
 #text box to enter search into
 mEntry = Entry(mGui,textvariable=ment).pack()
-
-
 
 #mbutton = Button(mGui,text='Quit',command=quit).pack(side=LEFT, anchor=S, padx=[200,10])
 
 mGui.mainloop()
-

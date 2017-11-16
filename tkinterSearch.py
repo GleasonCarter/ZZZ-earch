@@ -26,7 +26,7 @@ def manipulateText(stext):
 #need to print results somehow
 def results(stext,file1):
 	mGui2 = Tk()
-	mGui2.geometry('450x450+200+100')
+	mGui2.geometry('1000x1000+200+100')
 	mGui2.title('Results')
 	Button(mGui2,text="Restart",command = restart).pack()
 	Label(mGui2,text=stext).pack()
@@ -35,7 +35,7 @@ def results(stext,file1):
 		for line in ins:
 			array.append(line)
 			#makeLink(mGui2, line, r"http://www.google.com")
-			Label(mGui2,text=line).pack()
+			Label(mGui2,text=line,anchor='w').pack(expand=True,fill='both')
 	return
 
 def callback(url):
@@ -61,7 +61,7 @@ mGui = Tk()
 ment = StringVar()
 
 #build the dimensions
-mGui.geometry('450x450+200+100')
+mGui.geometry('200x60+100+100')
 mGui.title('My Search Bar')
 
 #mlabel = Label(mGui, text='My Label').pack()

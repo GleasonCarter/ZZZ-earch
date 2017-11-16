@@ -1,9 +1,9 @@
 import sys
 import os
 import textManipulation as tM
-from Tkinter import *
+from Tkinter import * ## change this before merge TODO
 
-stp_wrds = ["the", "and", "of", "a", "but", "this", "that"] ## temporary test set of words
+stp_wrds = ["the", "and", "of", "a", "but", "this", "that"] ## temporary test set of stop words
 
 #all starts from the user input
 def userInput():

@@ -1,10 +1,9 @@
 import sys
 import os
-import textManipulation
+import textManipulation as tM
 from Tkinter import *
 
 stp_wrds = ["the", "and", "of", "a", "but", "this", "that"] ## temporary test set of words
-test = "the shore, a place to be"
 
 #all starts from the user input
 def userInput():
@@ -15,10 +14,11 @@ def userInput():
 
 #need to do stuff with text
 def manipulateText(stext):
-	word_arr = stext.split()
+	print "Base value:"
 	print(stext)
-	print ("This is new:")
-	for word in word_arr:
+	print "Keywords:"
+	our_keywords = tM.extractKeywords(stext, stp_wrds)
+	for word in our_keywords:
 		print(word)
 
 	#give the results of running the

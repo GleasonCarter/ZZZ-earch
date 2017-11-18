@@ -36,12 +36,12 @@ def results(stext,file1):
 	frame = Frame(mGui2, bd=2, relief=SUNKEN)
 	frame.grid_rowconfigure(0, weight=1)
 	frame.grid_columnconfigure(0, weight=1)
-	yscrollbar = Scrollbar(frame)
+	yscrollbar = Scrollbar(frame, orient=VERTICAL)
 	yscrollbar.grid(row=0, column=1, sticky=N+S)
 	canvas = Canvas(frame, bd=0, yscrollcommand=yscrollbar.set)
 	canvas.grid(row=0, column=0, sticky=N+S+E+W)
 	yscrollbar.config(command=canvas.yview)
-	frame.pack()
+	frame.pack(side=LEFT, fill=BOTH, expand=True)
 	# Currently creates for a listbox on popup text/results box
 	#listbox = Listbox(mGui2, yscrollcommand=scrollbar.set)
 	#for i in range(100):
@@ -54,7 +54,7 @@ def results(stext,file1):
 		for line in ins:
 			array.append(line)
 			#makeLink(mGui2, line, r"http://www.google.com")
-			Label(mGui2,text=line,anchor='w').pack(expand=True,fill='both')
+			Label(canvas,text=line,anchor=NW).pack(fill=X)
 	return
 
 def callback(url):

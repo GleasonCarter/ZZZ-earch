@@ -24,8 +24,57 @@ def alias(stext, dictionary):
     first_letter = stext[0]
     for word in dictionary:
         if first_letter == word[0]:
-            ## Run edit distance TODO
-            ## Add distance to list of distances
-            pass
+            curr_dist = editDistance(word, stext)
+            distances[curr_dist] = word
     ## A very python line
     return distances[distances.keys().sort()[0]]
+
+## Creates 2d array
+## Each char in first_str represents a row, each char in second_str represents column
+## Each cell holds a tupel of form : (distance, direction)
+def editDistance(first_str, second_str):
+    ## Add extra space to both
+    first_str = "-" + first_str
+    second_str = "-" + second_str
+    ## Create structure of matrix
+    return_matrix = [None] * len(first_str)
+    for row in xrange(len(first_str)):
+        internal_matrix = [None] * len(second_str)
+        for col in xrange(len(second_str)):
+            if (row == 0) and (col != 0):
+                internal_matrix[col] = (col,"hori")
+            elif (col == 0) and (row != 0):
+                internal_matrix[col] = (row,"vert")
+            elif (row == 0) and (col == 0):
+                internal_matrix[col] = (0,"diag")
+            else:
+                internal_matrix[col] = (None,None)
+        return_matrix[row] = internal_matrix
+    fillMatrix(return_matrix, first_str, second_str)
+	rows = len(row_str)
+	cols = len(col_str)
+	distance, None = full_matrix[rows-1][cols-1]
+	return distance
+
+## Fills in values for rest of the matrix
+## Calculates cell's value based on neighbors
+def fillMatrix(empty_matrix, row_str, col_str):
+    for x in xrange(1,len(row_str)):
+        for y in xrange(1,len(col_str)):
+            ## Set op_cost
+            if row_str[x] != col_str[y]:
+                op_cost = 1
+            else:
+                op_cost = 0
+            ## Find min distance
+            distance1, _ = empty_matrix[x-1][y-1]
+            distance2, _ = empty_matrix[x][y-1]
+            distance3, _ = empty_matrix[x-1][y]
+            min_neighbor = min(distance1 + op_cost, distance2 + 1, distance3 + 1)
+            ## Determine direction
+            if min_neighbor == distance1 + op_cost:
+                empty_matrix[x][y] = (min_neighbor, "diag")
+            elif min_neighbor == distance2  + 1:
+                empty_matrix[x][y] = (min_neighbor, "hori")
+            elif min_neighbor == distance3 + 1:
+                empty_matrix[x][y] = (min_neighbor, "vert")

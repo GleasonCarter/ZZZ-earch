@@ -8,7 +8,8 @@ if __name__ == '__main__':
     str4 = ".Remove Both,"
     str5 = "(.Remove Multiple!-"
     str6 = "!$#@><:}"
-    strings_to_test = [str1, str2, str3, str4, str5, str6]
+    str7 = "...................................."
+    strings_to_test = [str1, str2, str3, str4, str5, str6, str7]
 
     for string in strings_to_test:
         print tM.stripPunctuation(string)

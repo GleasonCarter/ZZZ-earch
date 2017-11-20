@@ -141,14 +141,16 @@ def results(stext,file1):
 
 	# Create scrollbar for right side of popup text box
 	# Issues: Packs in above listed out "results" ADDRESS THIS
-	frame = Frame(mGui2, bd=2, relief=SUNKEN)
-	frame.grid_rowconfigure(0, weight=1)
-	frame.grid_columnconfigure(0, weight=1)
+	frame = Frame(mGui2, bd=2, relief=SUNKEN, width=300, height=300)
+	#frame.grid_rowconfigure(0, weight=1)
+	#frame.grid_columnconfigure(0, weight=1)
+	canvas = Canvas(frame, bd=0)
+	#canvas.grid(row=0, column=0, sticky=N+S+E+W)
 	yscrollbar = Scrollbar(frame, orient=VERTICAL)
-	yscrollbar.grid(row=0, column=1, sticky=N+S)
-	canvas = Canvas(frame, bd=0, yscrollcommand=yscrollbar.set)
-	canvas.grid(row=0, column=0, sticky=N+S+E+W)
+	yscrollbar.pack(side=RIGHT,fill=Y)
 	yscrollbar.config(command=canvas.yview)
+	canvas.config(yscrollcommand=yscrollbar.set)
+	canvas.pack(side=LEFT,expand=TRUE,fill=BOTH)
 	frame.pack(side=LEFT, fill=BOTH, expand=True)
 	# Currently creates for a listbox on popup text/results box
 	#listbox = Listbox(mGui2, yscrollcommand=scrollbar.set)
@@ -159,10 +161,16 @@ def results(stext,file1):
 
 	with open(file1, "r") as ins:
 		array = []
+		i = 0
 		for line in ins:
 			if(line != '\n'):
 				array.append(line)
-				makeLink(canvas, line, r"http://www.google.com")
+				#makeLink(canvas, line, r"http://www.google.com").pack(fill=X)
+
+				lnk = makeLink(canvas, line, r"http://www.google.com")
+				canvas.create_window(10, 35 * i, anchor=NW, window=lnk)
+				i+=1
+				canvas.config(scrollregion=canvas.bbox(ALL))
 				#Label(canvas,text=line,anchor=NW).pack(fill=X)
 	return
 
@@ -172,8 +180,9 @@ def callback(url):
 #makes link labeled 'text' that directs to 'url' and packs it
 def makeLink(root, txt, url):
         link = Label(root, text=txt, anchor=NW, fg="blue", cursor="hand2", font="Arial 10 underline")
-        link.pack(fill=X)
+        #link.pack(fill=X)
         link.bind("<Button-1>", lambda x: callback(url))
+        return link
 
 def restart():
 	python = sys.executable

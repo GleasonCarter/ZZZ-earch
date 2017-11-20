@@ -2,6 +2,89 @@ import sys
 import os
 from tkinter import *
 import webbrowser
+import string
+
+
+## Strips leading and trailing punctuation from a word(buggy)
+def stripPunctuation(a_word):
+	## loop untill all external punctuation has been removed
+	while ((len(a_word) > 0) and ((a_word[0] in string.punctuation) or (a_word[len(a_word)-1] in string.punctuation))):
+		for punct in string.punctuation:
+			a_word = a_word.strip(punct)
+	return a_word
+
+## Loops over all words(whitespace deliminated) and returns a list of keywords
+def extractKeywords(stext, stop_words):
+	all_words = stext.split()
+	keywords = []
+	for word in all_words:
+		if word not in stop_words:
+			#possibly strip punctation here
+			keywords.append(word)
+	return keywords
+
+## Uses simple edit distance algo to best guess what user ment(untested)
+def alias(stext, dictionary):
+    distances = {} ## Dict of form {edit dist: word}
+    ## Uses first leter to cut down on search time
+    first_letter = stext[0]
+    for word in dictionary:
+        if first_letter == word[0]:
+            curr_dist = editDistance(word, stext)
+            distances[curr_dist] = word
+    ## A very python line
+    return distances[distances.keys().sort()[0]]
+
+## Creates 2d array
+## Each char in first_str represents a row, each char in second_str represents column
+## Each cell holds a tupel of form : (distance, direction)
+def editDistance(first_str, second_str):
+    ## Add extra space to both
+    first_str = "-" + first_str
+    second_str = "-" + second_str
+    ## Create structure of matrix
+    return_matrix = [None] * len(first_str)
+    for row in xrange(len(first_str)):
+        internal_matrix = [None] * len(second_str)
+        for col in xrange(len(second_str)):
+            if (row == 0) and (col != 0):
+                internal_matrix[col] = (col,"hori")
+            elif (col == 0) and (row != 0):
+                internal_matrix[col] = (row,"vert")
+            elif (row == 0) and (col == 0):
+                internal_matrix[col] = (0,"diag")
+            else:
+                internal_matrix[col] = (None,None)
+        return_matrix[row] = internal_matrix
+    fillMatrix(return_matrix, first_str, second_str)
+    rows = len(row_str)
+    cols = len(col_str)
+    #distance, None = full_matrix[rows-1][cols-1]
+    distance = full_matrix[rows-1][cols-1]
+    return distance
+
+## Fills in values for rest of the matrix
+## Calculates cell's value based on neighbors
+def fillMatrix(empty_matrix, row_str, col_str):
+    for x in xrange(1,len(row_str)):
+        for y in xrange(1,len(col_str)):
+            ## Set op_cost
+            if row_str[x] != col_str[y]:
+                op_cost = 1
+            else:
+                op_cost = 0
+            ## Find min distance
+            distance1, _ = empty_matrix[x-1][y-1]
+            distance2, _ = empty_matrix[x][y-1]
+            distance3, _ = empty_matrix[x-1][y]
+            min_neighbor = min(distance1 + op_cost, distance2 + 1, distance3 + 1)
+            ## Determine direction
+            if min_neighbor == distance1 + op_cost:
+                empty_matrix[x][y] = (min_neighbor, "diag")
+            elif min_neighbor == distance2  + 1:
+                empty_matrix[x][y] = (min_neighbor, "hori")
+            elif min_neighbor == distance3 + 1:
+                empty_matrix[x][y] = (min_neighbor, "vert")
 
 #all starts from the user input
 def userInput():
@@ -13,13 +96,33 @@ def userInput():
 #need to do stuff with text 
 def manipulateText(stext):
 	word_arr = stext.split()
+	#grab the key words
+	#need to get the list of stop words 
+	#need access to indexing teams index here
+	stop_words = ["the","of","and","is"]
+	key_words = extractKeywords(stext,stop_words);
+	#aliased_words = alias(stext,index)
 	print(stext)
 	print ("This is new:")
 	for word in word_arr:
+		stripPunctuation(word)
 		print(word)
 
-	#give the results of running the 
-	#file = ranking(arr or text file whatever we are giving them)
+	#write results to a file
+	f1 = open("output.txt", "w")
+	f1.write("WHOLE TEXT\n")
+	f1.write(stext)
+	f1.write("\nKEYWORDS\n")
+	for kword in key_words:
+		f1.write(kword)
+		f1.write("\n")
+	f1.write("ALIAS\n")
+	#for aword in aliased_words:
+	#	f1.write(aword)
+	f1.close()
+
+	#give ranking our file that has the query
+	#file = ranking("output.txt")
 	results(stext,"file.txt")
 	return
 
@@ -29,7 +132,12 @@ def results(stext,file1):
 	mGui2.geometry('1000x1000+200+100')
 	mGui2.title('Results')
 	Button(mGui2,text="Restart",command = restart).pack()
+	#Label(mGui2,text=stext).pack()
+	#mbutton = Button(mGui2,text ="Search",command = userInput, fg='red',bg = 'blue').pack()
+	#text box to enter search into
+	#mEntry = Entry(mGui2,textvariable=ment).pack()
 	Label(mGui2,text=stext).pack()
+
 
 	# Create scrollbar for right side of popup text box
 	# Issues: Packs in above listed out "results" ADDRESS THIS
@@ -52,9 +160,10 @@ def results(stext,file1):
 	with open(file1, "r") as ins:
 		array = []
 		for line in ins:
-			array.append(line)
-			#makeLink(mGui2, line, r"http://www.google.com")
-			Label(canvas,text=line,anchor=NW).pack(fill=X)
+			if(line != '\n'):
+				array.append(line)
+				makeLink(canvas, line, r"http://www.google.com")
+				#Label(canvas,text=line,anchor=NW).pack(fill=X)
 	return
 
 def callback(url):
@@ -62,8 +171,8 @@ def callback(url):
 
 #makes link labeled 'text' that directs to 'url' and packs it
 def makeLink(root, txt, url):
-        link = Label(root, text=txt, fg="blue", cursor="hand2", font="Arial 10 underline")
-        link.pack()
+        link = Label(root, text=txt, anchor=NW, fg="blue", cursor="hand2", font="Arial 10 underline")
+        link.pack(fill=X)
         link.bind("<Button-1>", lambda x: callback(url))
 
 def restart():
@@ -80,7 +189,7 @@ mGui = Tk()
 ment = StringVar()
 
 #build the dimensions
-mGui.geometry('200x60+100+100')
+mGui.geometry('200x60+300+100')
 mGui.title('My Search Bar')
 
 #mlabel = Label(mGui, text='My Label').pack()

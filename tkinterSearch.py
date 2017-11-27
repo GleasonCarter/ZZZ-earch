@@ -1,9 +1,9 @@
 import sys
 import os
-from Tkinter import *
+from tkinter import *
 import webbrowser
 import string
-
+import json
 
 ## Strips leading and trailing punctuation from a word(buggy)
 def stripPunctuation(a_word):
@@ -108,7 +108,7 @@ def manipulateText(stext):
 		stripPunctuation(word)
 		print(word)
 
-	#write results to a file
+	#write results to a file TODO needs to be json instead
 	f1 = open("output.txt", "w")
 	f1.write("WHOLE TEXT\n")
 	f1.write(stext)

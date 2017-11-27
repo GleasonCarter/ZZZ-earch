@@ -1,6 +1,6 @@
 import sys
 import os
-from tkinter import *
+from Tkinter import *
 import webbrowser
 import string
 
@@ -91,13 +91,13 @@ def userInput():
 	mtext = ment.get()
 	mlabel2 = Label(mGui, text = mtext).pack()
 	manipulateText(mtext)
-	return 
+	return
 
-#need to do stuff with text 
+#need to do stuff with text
 def manipulateText(stext):
 	word_arr = stext.split()
 	#grab the key words
-	#need to get the list of stop words 
+	#need to get the list of stop words
 	#need access to indexing teams index here
 	stop_words = ["the","of","and","is"]
 	key_words = extractKeywords(stext,stop_words);
@@ -130,13 +130,11 @@ def manipulateText(stext):
 def results(stext,file1):
 	mGui2 = Tk()
 	mGui2.geometry('1000x1000+200+100')
-	mGui2.title('Results')
-	Button(mGui2,text="Restart",command = restart).pack()
+	mGui2.title('Results for "' + stext + '"')
 	#Label(mGui2,text=stext).pack()
 	#mbutton = Button(mGui2,text ="Search",command = userInput, fg='red',bg = 'blue').pack()
 	#text box to enter search into
 	#mEntry = Entry(mGui2,textvariable=ment).pack()
-	Label(mGui2,text=stext).pack()
 
 
 	# Create scrollbar for right side of popup text box

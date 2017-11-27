@@ -129,7 +129,7 @@ def manipulateText(stext):
 #need to print results somehow
 def results(stext,file1):
 	mGui2 = Tk()
-	mGui2.geometry('1000x1000+200+100')
+	mGui2.geometry('800x500+200+100')
 	mGui2.title('Results for "' + stext + '"')
 	#Label(mGui2,text=stext).pack()
 	#mbutton = Button(mGui2,text ="Search",command = userInput, fg='red',bg = 'blue').pack()

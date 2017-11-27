@@ -197,7 +197,7 @@ ment = StringVar()
 
 #build the dimensions
 mGui.geometry('800x60+300+100')
-mGui.title('My Search Bar')
+mGui.title('ZZZ-earch!!')
 
 #mlabel = Label(mGui, text='My Label').pack()
 

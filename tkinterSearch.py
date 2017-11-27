@@ -89,7 +89,7 @@ def fillMatrix(empty_matrix, row_str, col_str):
 #all starts from the user input
 def userInput():
 	mtext = ment.get()
-	mlabel2 = Label(mGui, text = mtext).pack()
+	## mlabel2 = Label(mGui, text = mtext).pack()
 	manipulateText(mtext)
 	return
 
@@ -129,7 +129,7 @@ def manipulateText(stext):
 #need to print results somehow
 def results(stext,file1):
 	mGui2 = Tk()
-	mGui2.geometry('800x500+200+100')
+	mGui2.geometry('800x500+300+200')
 	mGui2.title('Results for "' + stext + '"')
 	#Label(mGui2,text=stext).pack()
 	#mbutton = Button(mGui2,text ="Search",command = userInput, fg='red',bg = 'blue').pack()
@@ -196,7 +196,7 @@ mGui = Tk()
 ment = StringVar()
 
 #build the dimensions
-mGui.geometry('200x60+300+100')
+mGui.geometry('800x60+300+100')
 mGui.title('My Search Bar')
 
 #mlabel = Label(mGui, text='My Label').pack()
@@ -205,7 +205,7 @@ mGui.title('My Search Bar')
 mbutton = Button(mGui,text ="Search",command = userInput, fg='red',bg = 'blue').pack()
 
 #text box to enter search into
-mEntry = Entry(mGui,textvariable=ment).pack()
+mEntry = Entry(mGui,textvariable=ment, width=120).pack()
 
 #mbutton = Button(mGui,text='Quit',command=quit).pack(side=LEFT, anchor=S, padx=[200,10])
 

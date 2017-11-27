@@ -26,7 +26,7 @@ def alias(stext, dictionary):
         if first_letter == word[0]:
             curr_dist = editDistance(word, stext)
             distances[curr_dist] = word
-    ## A very python line
+    ## A very python line, should return word associated with lowest edit distance
     return distances[distances.keys().sort()[0]]
 
 ## Creates 2d array

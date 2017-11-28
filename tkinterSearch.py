@@ -108,18 +108,26 @@ def manipulateText(stext):
 		stripPunctuation(word)
 		print(word)
 
-	#write results to a file TODO needs to be json instead
-	f1 = open("output.txt", "w")
-	f1.write("WHOLE TEXT\n")
-	f1.write(stext)
-	f1.write("\nKEYWORDS\n")
-	for kword in key_words:
-		f1.write(kword)
-		f1.write("\n")
-	f1.write("ALIAS\n")
-	#for aword in aliased_words:
-	#	f1.write(aword)
-	f1.close()
+	#write results to a file TODO need to implement transform search stuff
+	transform_search = "Transformed search implementation"
+	t_key_words = "Transformed Tokens"
+	data1 = {}
+	data1['raw'] = []
+	data1['raw'].append({
+		"raw_search": stext,
+		"raw_tokens": key_words
+	})
+	data1['transformed'] = []
+	data1['transformed'].append ({
+		"transformed_search": transform_search,
+		"transformed_tokens": t_key_words
+	})
+
+	with open('data.txt', 'w') as outfile:  
+	    json.dump(data1, outfile)
+
+	data1 = json.dumps(data1,indent=4)
+	print("\n\n" + data1)
 
 	#give ranking our file that has the query
 	#file = ranking("output.txt")

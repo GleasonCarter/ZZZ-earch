@@ -4,6 +4,7 @@ from tkinter import *
 import webbrowser
 import string
 import json
+import requests
 
 ## Strips leading and trailing punctuation from a word(buggy)
 def stripPunctuation(a_word):
@@ -126,8 +127,15 @@ def manipulateText(stext):
 	with open('data.txt', 'w') as outfile:  
 	    json.dump(data1, outfile)
 
+	#url = "team__.cs.rpi.edu/ranking"
+	url = "http://google.com"
+	#make data look pretty
 	data1 = json.dumps(data1,indent=4)
+	#send data to ranking team
+	r = requests.post(url, data=data1)
 	print("\n\n" + data1)
+	#Get data back from ranking
+	r = requests.get(url)
 
 	#give ranking our file that has the query
 	#file = ranking("output.txt")

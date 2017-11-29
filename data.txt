@@ -1,1 +1,1 @@
-{"raw": [{"raw_search": "yeah", "raw_tokens": ["yeah"]}], "transformed": [{"transformed_search": "Transformed search implementation", "transformed_tokens": "Transformed Tokens"}]}
+{"raw": [{"raw_search": "yes", "raw_tokens": ["yes"]}], "transformed": [{"transformed_search": "Transformed search implementation", "transformed_tokens": "Transformed Tokens"}]}

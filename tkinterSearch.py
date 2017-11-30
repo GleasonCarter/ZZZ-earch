@@ -6,6 +6,7 @@ import string
 import json
 import requests
 import random
+import math
 
 ## identifies ngrams in query
 def ngram(n, stext, stop_words):
@@ -114,8 +115,9 @@ def fillMatrix(empty_matrix, row_str, col_str):
 #all starts from the user input
 def userInput():
 	mtext = ment.get()
-	## mlabel2 = Label(mGui, text = mtext).pack()
+
 	manipulateText(mtext)
+	#results(mtext, "file.txt")
 	return
 
 #need to do stuff with text
@@ -188,6 +190,7 @@ def results(stext,file1):
 	frame = Frame(mGui2, bd=2, relief=SUNKEN, width=300, height=300)
 	#frame.grid_rowconfigure(0, weight=1)
 	#frame.grid_columnconfigure(0, weight=1)
+	global canvas
 	canvas = Canvas(frame, bd=0)
 	#canvas.grid(row=0, column=0, sticky=N+S+E+W)
 	yscrollbar = Scrollbar(frame, orient=VERTICAL)
@@ -196,6 +199,7 @@ def results(stext,file1):
 	canvas.config(yscrollcommand=yscrollbar.set)
 	canvas.pack(side=LEFT,expand=TRUE,fill=BOTH)
 	frame.pack(side=LEFT, fill=BOTH, expand=True)
+	canvas.bind_all("<MouseWheel>", onScroll)
 	# Currently creates for a listbox on popup text/results box
 	#listbox = Listbox(mGui2, yscrollcommand=scrollbar.set)
 	#for i in range(100):
@@ -222,15 +226,30 @@ def results(stext,file1):
 
 	return
 
+def onScroll(event):
+        sign = event.delta / math.fabs(event.delta)
+        sign = int(sign)
+        canvas.yview_scroll(-sign * int(math.ceil(math.fabs(event.delta/120))), "units")
+
 def callback(url):
     webbrowser.open(url)
 
-#makes link labeled 'text' that directs to 'url' and packs it
+#makes link labeled 'txt' that directs to 'url'
 def makeLink(root, txt, url):
         link = Label(root, text=txt, anchor=NW, fg="blue", cursor="hand2", font="Arial 10 underline")
-        #link.pack(fill=X)
         link.bind("<Button-1>", lambda x: callback(url))
         return link
+
+def addSearchResult(canvas, itemOffset, title, url, snippet):
+        lnk = makeLink(canvas, title, url)
+        canvas.create_window(10, 50 * itemOffset, anchor=NW, window=lnk)
+
+        lbl = Label(canvas, anchor=NW, text=snippet, font="Arial 10")
+        canvas.create_window(10, 50 * itemOffset + 22, anchor=NW, window=lbl)
+
+        canvas.config(scrollregion=canvas.bbox(ALL))
+        return 1
+        
 
 def restart():
 	python = sys.executable

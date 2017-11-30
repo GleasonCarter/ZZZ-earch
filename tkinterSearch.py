@@ -1,10 +1,14 @@
 import sys
 import os
-from tkinter import *
+from Tkinter import *
 import webbrowser
 import string
 import json
 import requests
+import random
+
+# def ngram(n, stext, stop_words):
+
 
 ## Strips leading and trailing punctuation from a word(buggy)
 def stripPunctuation(a_word):
@@ -111,9 +115,12 @@ def manipulateText(stext):
 
 	#write results to a file TODO need to implement transform search stuff
 	transform_search = "Transformed search implementation"
+	search_id = random.randint(0, 10000)
+	for char in stext:
+		search_id += ord(char)
 	t_key_words = "Transformed Tokens"
 	data1 = {}
-	data1['search'] = 1234
+	data1['search'] = search_id
 	data1['raw'] = []
 	data1['raw'].append({
 		"raw_search": stext,
@@ -127,7 +134,7 @@ def manipulateText(stext):
 		"transformed_trigrams": "Put this in"
 	})
 
-	with open('data.txt', 'w') as outfile:  
+	with open('data.txt', 'w') as outfile:
 	    json.dump(data1, outfile)
 
 	#url = "team__.cs.rpi.edu/ranking"

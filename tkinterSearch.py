@@ -1,13 +1,14 @@
 import sys
 import os
-from Tkinter import *
+from tkinter import *
 import webbrowser
 import string
 import json
 import requests
 import random
 
-# def ngram(n, stext, stop_words):
+#def ngram(n, stext, stop_words):
+
 
 
 ## Strips leading and trailing punctuation from a word(buggy)

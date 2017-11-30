@@ -113,6 +113,7 @@ def manipulateText(stext):
 	transform_search = "Transformed search implementation"
 	t_key_words = "Transformed Tokens"
 	data1 = {}
+	data1['search'] = 1234
 	data1['raw'] = []
 	data1['raw'].append({
 		"raw_search": stext,
@@ -121,7 +122,9 @@ def manipulateText(stext):
 	data1['transformed'] = []
 	data1['transformed'].append ({
 		"transformed_search": transform_search,
-		"transformed_tokens": t_key_words
+		"transformed_tokens": t_key_words,
+		"transformed_bigrams": "Put this in",
+		"transformed_trigrams": "Put this in"
 	})
 
 	with open('data.txt', 'w') as outfile:  
@@ -172,6 +175,10 @@ def results(stext,file1):
 	#	listbox.insert(END, str(i))
 	#listbox.pack(side=LEFT, fill=BOTH)
 	#scrollbar.config(command=listbox.yview)
+
+	#data2 = json.load(open('HelloWorldTest.json'))
+
+	#pprint(data2)
 
 	with open(file1, "r") as ins:
 		array = []

@@ -1,1 +1,1 @@
-{"raw": [{"raw_tokens": ["reeeeeeeeeeeeeeeeee"], "raw_search": "reeeeeeeeeeeeeeeeee"}], "search": 11116, "transformed": [{"transformed_search": "Transformed search implementation", "transformed_bigrams": [], "transformed_tokens": "Transformed Tokens", "transformed_trigrams": []}]}
+{"search": 4447, "raw": [{"raw_search": "helo world the is cool", "raw_tokens": ["helo", "world", "cool"]}], "transformed": [{"transformed_search": "Transformed search implementation", "transformed_tokens": "Transformed Tokens", "transformed_bigrams": ["helo world"], "transformed_trigrams": []}]}

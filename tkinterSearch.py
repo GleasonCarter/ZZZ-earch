@@ -1,6 +1,6 @@
 import sys
 import os
-from Tkinter import *
+from tkinter import *
 import webbrowser
 import string
 import json
@@ -12,7 +12,7 @@ def ngram(n, stext, stop_words):
 	ngrams = []
 	words = stext.split()
 	## increment first word of n-gram
-	print "Constructing " + str(n) + "-grams:"
+	print( "Constructing " + str(n) + "-grams:")
 	for i in range(0, len(words)-(n-1)):
 		## construct an individual ngram
 		word_count = 0
@@ -23,9 +23,9 @@ def ngram(n, stext, stop_words):
 			if current_word not in stop_words:
 				word_count += 1;
 				this_gram = this_gram + " " + current_word
-				print "Adding " + current_word
+				print( "Adding " + current_word)
 				this_gram = this_gram.lstrip(" ")
-				print "Ngram now is " + this_gram
+				print ("Ngram now is " + this_gram)
 		if word_count == n:
 			ngrams.append(this_gram)
 	return ngrams
@@ -207,19 +207,19 @@ def results(stext,file1):
 
 	#pprint(data2)
 
-	with open(file1, "r") as ins:
-		array = []
-		i = 0
-		for line in ins:
-			if(line != '\n'):
-				array.append(line)
-				#makeLink(canvas, line, r"http://www.google.com").pack(fill=X)
+	data2 = json.load(open('HelloWorldTest.json'))
 
-				lnk = makeLink(canvas, line, r"http://www.google.com")
-				canvas.create_window(10, 35 * i, anchor=NW, window=lnk)
-				i+=1
-				canvas.config(scrollregion=canvas.bbox(ALL))
-				#Label(canvas,text=line,anchor=NW).pack(fill=X)
+	j = 0
+	array = []
+	for d in data2['ranking']:
+		url = (data2['ranking'][j]['url'])
+		name = stext + str(j)
+		lnk = makeLink(canvas, name, url)
+		canvas.create_window(10, 35 * j, anchor=NW, window=lnk)
+		canvas.config(scrollregion=canvas.bbox(ALL))
+		#Label(canvas,text=name,anchor=NW).pack(fill=X)
+		j+=1
+
 	return
 
 def callback(url):

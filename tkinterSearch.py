@@ -19,7 +19,7 @@ def ngram(n, stext, stop_words):
 	ngrams = []
 	words = stext.split()
 	## increment first word of n-gram
-	print( "Constructing " + str(n) + "-grams:")
+	#print( "Constructing " + str(n) + "-grams:")
 	for i in range(0, len(words)-(n-1)):
 		## construct an individual ngram
 		word_count = 0
@@ -30,9 +30,9 @@ def ngram(n, stext, stop_words):
 			if current_word not in stop_words:
 				word_count += 1;
 				this_gram = this_gram + " " + current_word
-				print( "Adding " + current_word)
+				#print( "Adding " + current_word)
 				this_gram = this_gram.lstrip(" ")
-				print ("Ngram now is " + this_gram)
+				#print ("Ngram now is " + this_gram)
 		if word_count == n:
 			ngrams.append(this_gram)
 	return ngrams
@@ -135,11 +135,11 @@ def manipulateText(stext):
 	
 	key_words = extractKeywords(stext,STOP_WORDS);
 	#aliased_words = alias(stext,index)
-	print(stext)
-	print ("This is new:")
+	#print(stext)
+	#print ("This is new:")
 	for word in word_arr:
 		stripPunctuation(word)
-		print(word)
+		#print(word)
 
 	#write results to a file TODO need to implement transform search stuff
 	transform_search = "Transformed search implementation"

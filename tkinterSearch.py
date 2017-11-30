@@ -7,6 +7,12 @@ import json
 import requests
 import random
 
+STOP_WORDS = ["the","of","a","and","to","was","he","in","it",
+				"that","his","had","as","at","for","be",
+				"but","is","on","or","which","by","from",
+				"i","an","there","were","when","could","been",
+				"her","out","this","are","said","what"]
+
 ## identifies ngrams in query
 def ngram(n, stext, stop_words):
 	ngrams = []
@@ -124,8 +130,8 @@ def manipulateText(stext):
 	#grab the key words
 	#need to get the list of stop words
 	#need access to indexing teams index here
-	stop_words = ["the","of","and","is"]
-	key_words = extractKeywords(stext,stop_words);
+	
+	key_words = extractKeywords(stext,STOP_WORDS);
 	#aliased_words = alias(stext,index)
 	print(stext)
 	print ("This is new:")
@@ -150,8 +156,8 @@ def manipulateText(stext):
 	data1['transformed'].append ({
 		"transformed_search": transform_search,
 		"transformed_tokens": t_key_words,
-		"transformed_bigrams": ngram(2, stext, stop_words),
-		"transformed_trigrams": ngram(3, stext, stop_words)
+		"transformed_bigrams": ngram(2, stext, STOP_WORDS),
+		"transformed_trigrams": ngram(3, stext, STOP_WORDS)
 	})
 
 	with open('data.txt', 'w') as outfile:

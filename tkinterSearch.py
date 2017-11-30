@@ -1,15 +1,34 @@
 import sys
 import os
-from tkinter import *
+from Tkinter import *
 import webbrowser
 import string
 import json
 import requests
 import random
 
-#def ngram(n, stext, stop_words):
-
-
+## identifies ngrams in query
+def ngram(n, stext, stop_words):
+	ngrams = []
+	words = stext.split()
+	## increment first word of n-gram
+	print "Constructing " + str(n) + "-grams:"
+	for i in range(0, len(words)-(n-1)):
+		## construct an individual ngram
+		word_count = 0
+		this_gram = ""
+		for j in range(0, n):
+			current_word = words[i + j]
+			## ensure no stop words
+			if current_word not in stop_words:
+				word_count += 1;
+				this_gram = this_gram + " " + current_word
+				print "Adding " + current_word
+				this_gram = this_gram.lstrip(" ")
+				print "Ngram now is " + this_gram
+		if word_count == n:
+			ngrams.append(this_gram)
+	return ngrams
 
 ## Strips leading and trailing punctuation from a word(buggy)
 def stripPunctuation(a_word):
@@ -131,8 +150,8 @@ def manipulateText(stext):
 	data1['transformed'].append ({
 		"transformed_search": transform_search,
 		"transformed_tokens": t_key_words,
-		"transformed_bigrams": "Put this in",
-		"transformed_trigrams": "Put this in"
+		"transformed_bigrams": ngram(2, stext, stop_words),
+		"transformed_trigrams": ngram(3, stext, stop_words)
 	})
 
 	with open('data.txt', 'w') as outfile:

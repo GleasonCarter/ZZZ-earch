@@ -142,11 +142,11 @@ def manipulateText(stext):
 		#print(word)
 
 	#write results to a file TODO need to implement transform search stuff
-	transform_search = "Transformed search implementation"
+	transform_search = "Need to do --> Transformed Search "
 	search_id = random.randint(0, 10000)
 	for char in stext:
 		search_id += ord(char)
-	t_key_words = "Transformed Tokens"
+	t_key_words = "Need to do --> Transformed Tokens"
 	data1 = {}
 	data1['search'] = search_id
 	data1['raw'] = []
@@ -217,13 +217,13 @@ def results(stext,file1):
 
 	#pprint(data2)
 
-	data2 = json.load(open('HelloWorldTest.json'))
+	data2 = json.load(open('Elephants.json'))
 
 	j = 0
 	array = []
 	for d in data2['ranking']:
 		url = (data2['ranking'][j]['url'])
-		name = stext + str(j)
+		name = stext + str(j+1)
 		lnk = makeLink(canvas, name, url)
 		canvas.create_window(10, 35 * j, anchor=NW, window=lnk)
 		canvas.config(scrollregion=canvas.bbox(ALL))

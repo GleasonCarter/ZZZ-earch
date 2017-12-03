@@ -119,12 +119,13 @@ def fillMatrix(empty_matrix, row_str, col_str):
                 empty_matrix[x][y] = (min_neighbor, "vert")
 
 #all starts from the user input
-def userInput():
-	mtext = ment.get()
+def userInput(self):
+        mtext = ment.get()
+        if validSearch(mtext):
+                manipulateText(mtext)
 
-	manipulateText(mtext)
-	#results(mtext, "file.txt")
-	return
+def validSearch(txt):
+        return bool(re.search(r'[0-9A-Za-z]', txt))
 
 #need to do stuff with text
 def manipulateText(stext):
@@ -132,7 +133,7 @@ def manipulateText(stext):
 	#grab the key words
 	#need to get the list of stop words
 	#need access to indexing teams index here
-	
+
 	key_words = extractKeywords(stext,STOP_WORDS);
 	#aliased_words = alias(stext,index)
 	#print(stext)
@@ -183,22 +184,16 @@ def manipulateText(stext):
 #need to print results somehow
 def results(stext,file1):
 	mGui2 = Tk()
-	mGui2.geometry('800x500+300+200')
+	mGui2.focus_force()
+	mGui2.geometry('800x500+300+250')
 	mGui2.title('Results for "' + stext + '"')
-	#Label(mGui2,text=stext).pack()
-	#mbutton = Button(mGui2,text ="Search",command = userInput, fg='red',bg = 'blue').pack()
-	#text box to enter search into
-	#mEntry = Entry(mGui2,textvariable=ment).pack()
-
 
 	# Create scrollbar for right side of popup text box
 	# Issues: Packs in above listed out "results" ADDRESS THIS
 	frame = Frame(mGui2, bd=2, relief=SUNKEN, width=300, height=300)
-	#frame.grid_rowconfigure(0, weight=1)
-	#frame.grid_columnconfigure(0, weight=1)
+
 	global canvas
 	canvas = Canvas(frame, bd=0)
-	#canvas.grid(row=0, column=0, sticky=N+S+E+W)
 	yscrollbar = Scrollbar(frame, orient=VERTICAL)
 	yscrollbar.pack(side=RIGHT,fill=Y)
 	yscrollbar.config(command=canvas.yview)
@@ -206,13 +201,6 @@ def results(stext,file1):
 	canvas.pack(side=LEFT,expand=TRUE,fill=BOTH)
 	frame.pack(side=LEFT, fill=BOTH, expand=True)
 	canvas.bind_all("<MouseWheel>", onScroll)
-	# Currently creates for a listbox on popup text/results box
-	#listbox = Listbox(mGui2, yscrollcommand=scrollbar.set)
-	#for i in range(100):
-	#	listbox.insert(END, str(i))
-	#listbox.pack(side=LEFT, fill=BOTH)
-	#scrollbar.config(command=listbox.yview)
-
 	#data2 = json.load(open('HelloWorldTest.json'))
 
 	#pprint(data2)
@@ -224,10 +212,8 @@ def results(stext,file1):
 	for d in data2['ranking']:
 		url = (data2['ranking'][j]['url'])
 		name = stext + str(j+1)
-		lnk = makeLink(canvas, name, url)
-		canvas.create_window(10, 35 * j, anchor=NW, window=lnk)
-		canvas.config(scrollregion=canvas.bbox(ALL))
-		#Label(canvas,text=name,anchor=NW).pack(fill=X)
+
+		addSearchResult(canvas, j, name, url, "this is a snippet")
 		j+=1
 
 	return
@@ -242,20 +228,21 @@ def callback(url):
 
 #makes link labeled 'txt' that directs to 'url'
 def makeLink(root, txt, url):
-        link = Label(root, text=txt, anchor=NW, fg="blue", cursor="hand2", font="Arial 10 underline")
+        link = Label(root, text=txt, anchor=NW, fg="blue", cursor="hand2", font="Arial 12 underline")
         link.bind("<Button-1>", lambda x: callback(url))
         return link
 
+#add a search result to canvas
 def addSearchResult(canvas, itemOffset, title, url, snippet):
         lnk = makeLink(canvas, title, url)
-        canvas.create_window(10, 50 * itemOffset, anchor=NW, window=lnk)
+        canvas.create_window(10, 52 * itemOffset, anchor=NW, window=lnk)
 
-        lbl = Label(canvas, anchor=NW, text=snippet, font="Arial 10")
-        canvas.create_window(10, 50 * itemOffset + 22, anchor=NW, window=lbl)
+        lbl = Label(canvas, anchor=NW, text="..." + snippet + "...", font="Arial 11")
+        objId = canvas.create_window(10, 52 * itemOffset + 21, anchor=NW, window=lbl)
 
         canvas.config(scrollregion=canvas.bbox(ALL))
-        return 1
-        
+        return objId
+
 
 def restart():
 	python = sys.executable
@@ -271,16 +258,17 @@ mGui = Tk()
 ment = StringVar()
 
 #build the dimensions
-mGui.geometry('800x60+300+100')
+mGui.geometry('800x110+300+90')
 mGui.title('ZZZ-earch!!')
 
 #mlabel = Label(mGui, text='My Label').pack()
 
 #search Button
-mbutton = Button(mGui,text ="Search",command = userInput, fg='red',bg = 'blue').pack()
+mbutton = Button(mGui,text ="Search", font="Arial 15", command = lambda: userInput(mGui), relief=GROOVE).pack(pady=10)
+mGui.bind('<Return>', userInput)
 
 #text box to enter search into
-mEntry = Entry(mGui,textvariable=ment, width=120).pack()
+mEntry = Entry(mGui,textvariable=ment, width=120, font = "Arial 22", relief=RIDGE).pack(padx=20)
 
 #mbutton = Button(mGui,text='Quit',command=quit).pack(side=LEFT, anchor=S, padx=[200,10])
 

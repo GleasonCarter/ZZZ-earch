@@ -1,0 +1,20 @@
+{
+    "ID": 1234,
+    "ranking": [
+	{ 
+		"url": "https://en.wikipedia.org/wiki/%22Hello,_World!%22_program",
+		"rank": 1, 
+		"positions": {"query": [1, 55, 3000], "test": [5], "example": [2, 90] }
+	},
+	{
+		"url": "https://www.helloworldlive.com/",
+		"rank": 2,
+		"positions": {"query": [34], "test": [34, 78, 989, 234325]}
+	},
+	{ 
+		"url": "https://www.helloworld.com/",
+		"rank": 3, 
+		"positions": {"query": [1, 55, 3000], "test": [5], "example": [2, 90] }
+	}
+	]
+}

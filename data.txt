@@ -1,1 +1,1 @@
-
+{"search": 9963, "raw": [{"raw_search": "es", "raw_tokens": ["es"]}], "transformed": [{"transformed_search": "Need to do --> Transformed Search ", "transformed_tokens": "Need to do --> Transformed Tokens", "transformed_bigrams": [], "transformed_trigrams": []}]}

@@ -149,7 +149,7 @@ def manipulateText(stext):
 		search_id += ord(char)
 	t_key_words = "Need to do --> Transformed Tokens"
 	data1 = {}
-	data1['search'] = search_id
+	data1['search_id'] = search_id
 	data1['raw'] = []
 	data1['raw'].append({
 		"raw_search": stext,
@@ -166,23 +166,27 @@ def manipulateText(stext):
 	with open('data.txt', 'w') as outfile:
 	    json.dump(data1, outfile)
 
-	#url = "teamthorn.cs.rpi.edu/ranking"
-	url = "http://google.com"
+	url = "http://teamthorn.cs.rpi.edu:5000/ranking"
+	#port 5000
+	#url = "http://google.com"
 	#make data look pretty
+	data5 = json.dumps(data1)
 	data1 = json.dumps(data1,indent=4)
+
 	#send data to ranking team
-	r = requests.post(url, data=data1)
+	r = requests.post(url, json=data5)
 	print("\n\n" + data1)
 	#Get data back from ranking
-	print(r)
+	print(r.content)
+	print(json.loads(r.content))
 
 	#give ranking our file that has the query
 	#file = ranking("output.txt")
-	results(stext,"file.txt")
+	results(stext,"file.txt",r)
 	return
 
 #need to print results somehow
-def results(stext,file1):
+def results(stext,file1,r):
 	mGui2 = Tk()
 	mGui2.focus_force()
 	mGui2.geometry('800x500+300+250')
@@ -205,7 +209,9 @@ def results(stext,file1):
 
 	#pprint(data2)
 
-	data2 = json.load(open('Elephants.json'))
+	#data2 = json.load(open('Elephants.json'))
+	data2 = json.loads(r.content)
+	print(data2)
 
 	j = 0
 	array = []

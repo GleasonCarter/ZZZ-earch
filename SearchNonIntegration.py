@@ -166,9 +166,9 @@ def manipulateText(stext):
 	with open('data.txt', 'w') as outfile:
 	    json.dump(data1, outfile)
 
-	url = "http://teamthorn.cs.rpi.edu:5000/ranking"
+	#url = "http://teamthorn.cs.rpi.edu:5000/ranking"
 	#port 5000
-	#url = "http://google.com"
+	url = "http://google.com"
 	#make data look pretty
 	data5 = json.dumps(data1)
 	data1 = json.dumps(data1,indent=4)
@@ -177,8 +177,6 @@ def manipulateText(stext):
 	r = requests.post(url, json=data5)
 	#print("\n\n" + data1)
 	#Get data back from ranking
-	print(r.content)
-	print(json.loads(r.content))
 
 	#give ranking our file that has the query
 	#file = ranking("output.txt")
@@ -207,10 +205,10 @@ def results(stext,file1,r):
 	canvas.bind_all("<MouseWheel>", onScroll)
 	#data2 = json.load(open('HelloWorldTest.json'))
 
-	#pprint(data2)
+	#print(data2)
 
-	#data2 = json.load(open('Elephants.json'))
-	data2 = json.loads(r.content)
+	data2 = json.load(open('Elephants.json'))
+	#data2 = json.loads(r.content)
 	#print(data2)
 
 	j = 0
